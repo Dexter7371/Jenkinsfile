@@ -3,28 +3,22 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = 'dockerhub-creds-id'
-        GITHUB_CREDENTIALS = '53736394-88a2-4c62-a661-7187785b45aa'
         IMAGE_NAME = 'dexter7371/frontend-angular-19'
     }
 
     stages {
-        stage('Checkout Jenkinsfile Repo') {
+        stage('Checkout Repo') {
             steps {
-                // This was already successful
-                git credentialsId: "${GITHUB_CREDENTIALS}", branch: 'main', url: 'https://github.com/dexter73710/Jenkinsfile.git'
-            }
-        }
-
-        stage('Checkout Angular Project') {
-            steps {
-                git credentialsId: "${GITHUB_CREDENTIALS}", branch: 'main', url: 'https://github.com/dexter73710/frontend-angular-19.git'
+                git branch: 'main', url: 'https://github.com/dexter73710/Jenkinsfile.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("${IMAGE_NAME}", '.')
+                dir('frontend-angular-19') {
+                    script {
+                        docker.build("${IMAGE_NAME}", '.')
+                    }
                 }
             }
         }
