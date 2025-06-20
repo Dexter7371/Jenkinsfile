@@ -3,13 +3,21 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = 'dockerhub-creds-id'
+        GITHUB_CREDENTIALS = '53736394-88a2-4c62-a661-7187785b45aa'
         IMAGE_NAME = 'dexter7371/frontend-angular-19'
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Jenkinsfile Repo') {
             steps {
-                git branch: 'main', url: 'https://github.com/dexter73710/frontend-angular-19.git'
+                // This was already successful
+                git credentialsId: "${GITHUB_CREDENTIALS}", branch: 'main', url: 'https://github.com/dexter73710/Jenkinsfile.git'
+            }
+        }
+
+        stage('Checkout Angular Project') {
+            steps {
+                git credentialsId: "${GITHUB_CREDENTIALS}", branch: 'main', url: 'https://github.com/dexter73710/frontend-angular-19.git'
             }
         }
 
@@ -23,13 +31,7 @@ pipeline {
 
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: "${DOCKERHUB_CREDENTIALS}",
-                        usernameVariable: 'USERNAME',
-                        passwordVariable: 'PASSWORD'
-                    )
-                ]) {
+                withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin'
                 }
             }
