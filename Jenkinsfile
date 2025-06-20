@@ -6,12 +6,12 @@ pipeline {
         IMAGE_NAME = 'dexter7371/frontend-angular-19'
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/dexter73710/Jenkinsfile.git'
-            }
-        }
+    stage('Checkout') {
+    steps {
+        git branch: 'main', url: 'https://github.com/dexter73710/frontend-angular-19.git'
+    }
+}
+
 
         stage('Build Docker Image') {
             steps {
