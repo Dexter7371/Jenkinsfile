@@ -2,24 +2,21 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = 'dockerhub-creds-id'  // Jenkins credentials ID for Docker Hub
-        IMAGE_NAME = 'dexter7371/frontend-angular-19' // Docker Hub image name
-        APP_FOLDER = 'frontend-angular-19'            // Folder where Dockerfile is located
+        DOCKERHUB_CREDENTIALS = 'dockerhub-creds-id'
+        IMAGE_NAME = 'dexter7371/frontend-angular-19'
     }
 
-stage('Checkout Code') {
-    steps {
-        git branch: 'main', url: 'https://github.com/dexter73710/Jenkinsfile.git'
-    }
-}
-
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/dexter73710/Jenkinsfile.git'
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
-                dir("${APP_FOLDER}") {
-                    script {
-                        docker.build("${IMAGE_NAME}", '.')
-                    }
+                script {
+                    docker.build("${IMAGE_NAME}", '.')
                 }
             }
         }
