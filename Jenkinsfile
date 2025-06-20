@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/Dexter7371/Jenkinsfile.git'
+                git 'https://github.com/Dexter73710/Jenkinsfile.git'
             }
         }
 
