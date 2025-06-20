@@ -6,12 +6,12 @@ pipeline {
         IMAGE_NAME = 'dexter7371/frontend-angular-19'
     }
 
-    stages {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/dexter73710/frontend-angular-19.git'
             }
         }
+
 
         stage('Build Docker Image') {
             steps {
@@ -23,13 +23,7 @@ pipeline {
 
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: "${DOCKERHUB_CREDENTIALS}",
-                        usernameVariable: 'USERNAME',
-                        passwordVariable: 'PASSWORD'
-                    )
-                ]) {
+                withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin'
                 }
             }
@@ -49,3 +43,4 @@ pipeline {
             cleanWs()
         }
     }
+}
