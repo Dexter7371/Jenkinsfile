@@ -7,12 +7,12 @@ pipeline {
         APP_FOLDER = 'frontend-angular-19'            // Folder where Dockerfile is located
     }
 
-    stages {
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/Dexter73710/Jenkinsfile.git'
-            }
-        }
+stage('Checkout Code') {
+    steps {
+        git branch: 'main', url: 'https://github.com/dexter73710/Jenkinsfile.git'
+    }
+}
+
 
         stage('Build Docker Image') {
             steps {
