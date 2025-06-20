@@ -4,12 +4,15 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install -g http-server \
+    && npm install
 
 COPY . .
 
 RUN npm run build
 
+WORKDIR /app/dist/<your-project-name>
+
 EXPOSE 4000
 
-CMD ["npm", "run", "serve"]
+CMD [ "http-server", "-p", "4000" ]
